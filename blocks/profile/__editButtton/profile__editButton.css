@@ -9,6 +9,8 @@
       -ms-grid-row-align: center;
       align-self: center;
   outline: none;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-image: url(../../../images/EditButton.svg);
 }
 
@@ -23,6 +25,5 @@
   .profile__editButton {
     width: 18px;
     height: 18px;
-    background-image: url(../../../images/EditButton_min.svg);
   }
 }

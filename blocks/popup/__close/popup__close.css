@@ -10,6 +10,7 @@
       -ms-grid-row-align: center;
       align-self: center;
   outline: none;
+  background-size: contain;
   background-repeat: no-repeat;
   background-image: url(../../../images/popupClose-big.svg);
   background-position: center;
@@ -35,6 +36,6 @@
     -ms-flex-item-align: end;
         align-self: flex-end;
     margin-bottom: 13.65px;
-    background-image: url(../../../images/popupClose-min.svg);
+    
   }
 }
