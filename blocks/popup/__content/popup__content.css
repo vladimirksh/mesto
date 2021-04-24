@@ -1,0 +1,10 @@
+.popup__content {
+  display: flex;
+  min-height: 370px;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__content {
+    flex-direction: column;
+  }
+}

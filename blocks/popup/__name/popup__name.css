@@ -1,0 +1,12 @@
+.popup__name {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #000000;;
+  opacity: 0.2;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__name {
+    max-width: 238px;
+  }
+}
