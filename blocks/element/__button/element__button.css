@@ -1,8 +1,6 @@
 .element__button {
   padding: 0;
   border: none;
-  font: inherit;
-  color: inherit;
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -15,12 +13,3 @@ opacity: 0.5;
 -o-transition: 1s ease;
 transition: 1s ease;
 }
-
-.element__button:active {
-  opacity: 1;
-  background-image: url(../../../images/Union.svg);
-  -webkit-transition: 1s ease;
-  -moz-transition: 1s ease;
-  -o-transition: 1s ease;
-  transition: 1s ease;
-  }

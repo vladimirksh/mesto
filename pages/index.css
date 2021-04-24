@@ -39,6 +39,7 @@
 
 /*стили для popup*/
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popupOpen/popupOpen.css);
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/__body/popup__body.css);

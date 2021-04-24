@@ -6,7 +6,8 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  align-self: flex-start;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
 }
 
 @media screen and (max-width: 320px) {

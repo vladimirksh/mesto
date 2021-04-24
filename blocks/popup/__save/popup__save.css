@@ -5,7 +5,9 @@
   cursor: pointer;
   min-width: 358px;
   min-height: 50px;
-  align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   outline: none;
   background-repeat: no-repeat;
   background-image: url(../../../images/SubmitButton-big.svg);
@@ -14,7 +16,6 @@
 .popup__save:hover {
   opacity: 0.6;
   -webkit-transition: 1s ease;
-  -moz-transition: 1s ease;
   -o-transition: 1s ease;
   transition: 1s ease;
 }
