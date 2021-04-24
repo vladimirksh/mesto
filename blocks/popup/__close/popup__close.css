@@ -8,7 +8,7 @@
   height: 40px;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
-      align-self: center;
+      align-self: flex-start;
   outline: none;
   background-size: contain;
   background-repeat: no-repeat;
@@ -17,8 +17,6 @@
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
           order: 2;
-  -ms-flex-item-align: start;
-      align-self: flex-start;
 }
 
 .popup__close:hover {
@@ -36,6 +34,5 @@
     -ms-flex-item-align: end;
         align-self: flex-end;
     margin-bottom: 13.65px;
-    
   }
 }
