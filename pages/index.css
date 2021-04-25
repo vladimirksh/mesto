@@ -6,7 +6,7 @@
 
 /*стили для header*/
 @import url(../blocks/header/header.css);
-@import url(../blocks/logo/logo.css);
+@import url(../blocks/header/__logo/header__logo.css);
 /*стили для header*/
 
 /*стили для profile*/
@@ -16,16 +16,15 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__text/profile__text.css);
 @import url(../blocks/profile/__name/profile__name.css);
-@import url(../blocks/profile/__editButtton/profile__editButton.css);
+@import url(../blocks/profile/__editbuttton/profile__editbutton.css);
 @import url(../blocks/profile/__about/profile__about.css);
-@import url(../blocks/profile/__addButton/profile__addButton.css);
+@import url(../blocks/profile/__addButton/profile__addbutton.css);
 /*стили для profile*/
 
 /*стили для post*/
 @import url(../blocks/post/post.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
-@import url(../blocks/element/__post/element__post.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__signature/element__signature.css);
 @import url(../blocks/element/__title/element__title.css);
@@ -39,12 +38,11 @@
 
 /*стили для popup*/
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popupOpen/popupOpen.css);
+@import url(../blocks/popup_open/popup_open.css);
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/__body/popup__body.css);
 @import url(../blocks/popup/__title/popup__title.css);
-@import url(../blocks/popup/__name/popup__name.css);
-@import url(../blocks/popup/__about/popup__about.css);
+@import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save/popup__save.css);
 /*стили для popup*/

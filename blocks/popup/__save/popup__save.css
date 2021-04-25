@@ -1,7 +1,14 @@
 .popup__save {
   padding: 0;
   border: none;
-  background-color: transparent;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  background-color: #000;
+  color: #FFF;
   cursor: pointer;
   min-width: 358px;
   min-height: 50px;
@@ -10,7 +17,6 @@
       align-self: center;
   outline: none;
   background-repeat: no-repeat;
-  background-image: url(../../../images/SubmitButton-big.svg);
   background-size: contain;
 }
 

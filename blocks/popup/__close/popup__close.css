@@ -34,5 +34,8 @@
     -ms-flex-item-align: end;
         align-self: flex-end;
     margin-bottom: 13.65px;
+    width: 26px;
+    height: 26px;
+    background-image: url(../../../images/popupClose-min.svg);
   }
 }
