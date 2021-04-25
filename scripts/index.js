@@ -17,8 +17,8 @@ closePopupButton.addEventListener('click', openClose)
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__body');// Воспользуйтесь методом querySelector()
 // Находим поля формы в DOM
-let nameInput = document.querySelector('.popup__input_name');// Воспользуйтесь инструментом .querySelector()
-let jobInput = document.querySelector('.popup__input_about');// Воспользуйтесь инструментом .querySelector()
+let nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
+let jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
 let profileName = document.querySelector('.profile__name');
 let profileAbout = document.querySelector('.profile__about');
 // Обработчик «отправки» формы, хотя пока
@@ -41,4 +41,3 @@ function formSubmitHandler (evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
-popupButtonSave.addEventListener('click', formSubmitHandler);
