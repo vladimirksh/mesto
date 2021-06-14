@@ -42,16 +42,26 @@ const initialCards = [
     deleteButton.parentElement.remove();
   });
   //попап для картинок
-  const popupImageOpen = element.querySelector('.element__image');
-  popupImageOpen.addEventListener('click', function (evt) {    
-    console.log(evt);
-  });
+  element.querySelector('.element__image').addEventListener('click', function (evt) {
+    popupImage.setAttribute('src', element.querySelector('.element__image').src);
+    popupText.textContent = element.querySelector('.element__title').textContent;
+
+    evt.target.classList.toggle(openCloseZoom());
+});
+
   elements.append(element);//добавляем карточки
 })
 
+const popupZoom = document.querySelector('.popup_zoom-image');
+const popupCloseZoom = document.querySelector('.popup__close-zoom');
+function openCloseZoom() {
+  popupZoom.classList.toggle('popup_open');
+  
+}
 
-
-
+const popupImage = document.querySelector('.popup__image');
+const popupText = document.querySelector('.popup__text');
+popupCloseZoom.addEventListener('click', openCloseZoom)
 
 // Popup для новых постов
 const openPopupAddButton = document.querySelector('.profile__addbutton'); //Выбираем кнопку вызывающую попап
@@ -85,14 +95,18 @@ function formSubmitNewCard (evt) {
   deleteButton.addEventListener('click', function () {    
     deleteButton.parentElement.remove();
   });
-  elements.prepend(element);
+    //попап для картинок
+    element.querySelector('.element__image').addEventListener('click', function (evt) {
+      console.log(evt);
+  });
+
+   elements.prepend(element);
   openCloseAddCard();
   formElementAddcard.reset();//сбрасываем содержимое при повторном открытии попапа
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElementAddcard.addEventListener('submit', formSubmitNewCard);
-
 
 
 const openPopupButton = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
