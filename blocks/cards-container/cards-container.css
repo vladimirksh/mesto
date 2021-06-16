@@ -1,4 +1,4 @@
-.elements {
+.cards-container {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -16,7 +16,7 @@
 }
 
 @media (max-width: 768px) {
-  .elements {
+  .cards-container {
     -ms-grid-columns: (282px)[2];
     grid-template-columns: repeat(2, 282px);
     margin: 0 auto;
@@ -27,7 +27,7 @@
 }
 
 @media (max-width: 612px) {
-  .elements {
+  .cards-container {
     -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
   }

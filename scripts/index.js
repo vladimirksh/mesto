@@ -1,55 +1,42 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
   const template = document.querySelector('#template').content;//выбраем заготовку по id и запрашиваем внутренности
-  const elements = document.querySelector('.elements');//место куда копируем новые карточки
-//добавляем карточки, методом forEach проходим по каждому элементу массива
-  initialCards.forEach (function(item){
-  const element = template.querySelector('.element').cloneNode(true);// клонируем содержимое тега template
-  element.querySelector('.element__title').textContent = item.name;
-  element.querySelector('.element__image').src = item.link;
-  //добавляем лайк для созданных из массива карточек
-  element.querySelector('.element__like').addEventListener('click', function (evt) {
-      evt.target.classList.toggle('element__like_active');
-  });
-  //удаление карточки для созданных из массива карточек
-  const deleteButton = element.querySelector('.element__delete');
-  deleteButton.addEventListener('click', function () {    
+  const cardsContainer = document.querySelector('.cards-container');//место куда копируем новые карточки
+  const element = template.querySelector('.element').cloneNode(true);
+
+  const popupImage = document.querySelector('.popup__image');
+  const popupText = document.querySelector('.popup__text');
+
+//функция создания одной карочки с кнопкоми и попапом
+  function createCard (name, link) {
+    const element = template.querySelector('.element').cloneNode(true);
+    element.querySelector('.element__title').textContent = name;
+    element.querySelector('.element__image').src = link;
+    element.querySelector('.element__image').alt = name;
+
+    //добавляем кликабельный лайк для одной карточки, но когда функцию вызываю в методе forEach то лайк будет работать и у др.
+    element.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+    });
+    //удаление карточки будет работать по тому же принципу как и лайк, описываю функционал для одной но в методе будет работать и у др.
+    const deleteButton = element.querySelector('.element__delete');
+    deleteButton.addEventListener('click', function () {
     deleteButton.parentElement.remove();
-  });
-  //попап для картинок
-  element.querySelector('.element__image').addEventListener('click', function (evt) {
-    popupImage.setAttribute('src', element.querySelector('.element__image').src);
-    popupText.textContent = element.querySelector('.element__title').textContent;
+    });
+    //попап для картинки в элементе
+    element.querySelector('.element__image').addEventListener('click', function (evt) {
+    popupImage.setAttribute('src', element.querySelector('.element__image').src);//ссылка для картинки
+    popupImage.setAttribute('alt',element.querySelector('.element__title').textContent);//alt для картинки
+    popupText.textContent = element.querySelector('.element__title').textContent;//подпись снизу для картинки
     evt.target.classList.toggle(openCloseZoom());
+    });
+    return element;
+  }
+
+//добавляем карточки из массива (initialCards) с помощью метода forEach 
+initialCards.forEach (function(item){
+  cardsContainer.append(createCard(item.name,item.link));
 });
 
-  elements.append(element);//добавляем карточки
-})
+
 
 const popupZoom = document.querySelector('.popup_zoom-image');
 const popupCloseZoom = document.querySelector('.popup__close-zoom');
@@ -57,8 +44,6 @@ function openCloseZoom() {
   popupZoom.classList.toggle('popup_open');
 }
 
-const popupImage = document.querySelector('.popup__image');
-const popupText = document.querySelector('.popup__text');
 popupCloseZoom.addEventListener('click', openCloseZoom)
 
 // Popup для новых постов
@@ -79,7 +64,7 @@ const formElementAddcard = document.querySelector('.popup__body_add-card');
 
 function formSubmitNewCard (evt) {
   evt.preventDefault();
-  const element = template.querySelector('.element').cloneNode(true);
+  
   const placeInput = document.querySelector('.popup__input_type_place').value;
   const imageInput = document.querySelector('.popup__input_type_image').value;
   element.querySelector('.element__title').textContent = placeInput;
@@ -100,14 +85,13 @@ function formSubmitNewCard (evt) {
       evt.target.classList.toggle(openCloseZoom());
   });
 
-  elements.prepend(element);
+  cardsContainer.prepend(element);
   openCloseAddCard();
   formElementAddcard.reset();//сбрасываем содержимое при повторном открытии попапа
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElementAddcard.addEventListener('submit', formSubmitNewCard);
-
 
 const openPopupButton = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
 const popup = document.querySelector('.popup'); // Выбираем сам попап для использования этой константы в функции
