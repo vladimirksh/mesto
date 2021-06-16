@@ -5,6 +5,11 @@
   const popupImage = document.querySelector('.popup__image');
   const popupText = document.querySelector('.popup__text');
 
+  
+
+
+
+  
 //функция создания одной карочки с кнопкоми и попапом
   function createCard (name, link) {
     const element = template.querySelector('.element').cloneNode(true);
@@ -26,7 +31,7 @@
     popupImage.setAttribute('src', element.querySelector('.element__image').src);//ссылка для картинки
     popupImage.setAttribute('alt',element.querySelector('.element__title').textContent);//alt для картинки
     popupText.textContent = element.querySelector('.element__title').textContent;//подпись снизу для картинки
-    evt.target.classList.toggle(openCloseZoom());
+    openCloseZoom();
     });
     return element;
   }
@@ -45,6 +50,15 @@ function openCloseZoom() {
 }
 
 popupCloseZoom.addEventListener('click', openCloseZoom)
+
+
+
+
+
+
+
+
+
 
 // Popup для новых постов
 const openPopupAddButton = document.querySelector('.profile__addbutton'); //Выбираем кнопку вызывающую попап
@@ -93,24 +107,59 @@ function formSubmitNewCard (evt) {
 // он будет следить за событием “submit” - «отправка»
 formElementAddcard.addEventListener('submit', formSubmitNewCard);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const openPopupButton = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
-const popup = document.querySelector('.popup'); // Выбираем сам попап для использования этой константы в функции
-const closePopupButton = document.querySelector('.popup__close'); //Выбираем крест для закрытия попапа
+const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
+const closePopupButton = document.querySelector('.popup__close-change'); //Выбираем крест для закрытия попапа
 const popupButtonSave = document.querySelector('.popup__save');//Выбираем кнопку Сохранить
 
-// Функция которая добавляет и удалет класс
-function openClose() {
-  popup.classList.toggle('popup_open');
+
+function infoName() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileAbout.textContent;
-}
-// Открываем попап
-openPopupButton.addEventListener('click', openClose)
-closePopupButton.addEventListener('click', openClose)
+};
+// Функция которая добавляет и удалет класс
+function openPopup(popup) {
+  popup.classList.add('popup_open');
+};
 
+function closePopup(popup) {
+  popup.classList.remove('popup_open');
+};
+
+function openChangePopup () {
+  openPopup(popupChangeName);
+  infoName();
+  };
+
+// Открываем попап
+openPopupButton.addEventListener('click', openChangePopup);
+closePopupButton.addEventListener('click', () => closePopup(popupChangeName));
 // Находим форму в DOM
 const formElement = document.querySelector('.popup__body');// Воспользуйтесь методом querySelector()
-// Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
 const profileName = document.querySelector('.profile__name');
@@ -121,9 +170,8 @@ function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = jobInput.value;
-    openClose ();
+    closePopup(popupChangeName);
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
-
