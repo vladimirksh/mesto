@@ -27,12 +27,13 @@
     popupText.textContent = element.querySelector('.element__title').textContent;//подпись снизу для картинки
     openPopup(popupZoom);
     });
+
     return element;
   }
 
 //добавляем карточки из массива (initialCards) с помощью метода forEach 
 initialCards.forEach (function(item){
-  cardsContainer.append(createCard(item.name,item.link));
+  cardsFlow(cardsContainer, createCard(item.name,item.link));
 });
 
 //Закрываем увеличиельный попап
@@ -52,39 +53,23 @@ closePopupAddButton.addEventListener('click', () => closePopup(popupAddCard));
 // Находим форму в DOM для добавления нового поста
 const formElementAddcard = document.querySelector('.popup__body_add-card');
 
-
-function formSubmitNewCard (evt) {
-  evt.preventDefault();
-  
-  const placeInput = document.querySelector('.popup__input_type_place').value;
-  const imageInput = document.querySelector('.popup__input_type_image').value;
-  element.querySelector('.element__title').textContent = placeInput;
-  element.querySelector('.element__image').src = imageInput;
-  //добавляем лайк для созданных пользователем карточек
-  element.querySelector('.element__like').addEventListener('click', function (evt) {
-      evt.target.classList.toggle('element__like_active');
-  });
-  //удаление карточки
-  const deleteButton = element.querySelector('.element__delete');
-  deleteButton.addEventListener('click', function () {    
-    deleteButton.parentElement.remove();
-  });
-    //попап для картинок
-    element.querySelector('.element__image').addEventListener('click', function (evt) {
-      popupImage.setAttribute('src', element.querySelector('.element__image').src);
-      popupImage.setAttribute('alt', element.querySelector('.element__title').textContent);
-      popupText.textContent = element.querySelector('.element__title').textContent;
-      openPopup(popupZoom);
-  });
-
-  cardsContainer.prepend(element);
-  closePopup(popupAddCard);
-  formElementAddcard.reset();//сбрасываем содержимое при повторном открытии попапа
+//Функция добавления карточки в начало потока карт
+function cardsFlow (container, newCard){
+  container.prepend(newCard);
 }
+
+const placeInput = document.querySelector('.popup__input_type_place').value;
+const imageInput = document.querySelector('.popup__input_type_image').value;
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElementAddcard.addEventListener('submit', formSubmitNewCard);
 
+function formSubmitNewCard (evt) {
+  evt.preventDefault();
+  cardsFlow(cardsContainer, createCard (placeInput, imageInput));
+  formElementAddcard.reset();
+  closePopup(popupAddCard);
+};
 
 const openPopupButton = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
 const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
@@ -114,7 +99,7 @@ function openChangePopup () {
 openPopupButton.addEventListener('click', openChangePopup);
 closePopupButton.addEventListener('click', () => closePopup(popupChangeName));
 // Находим форму в DOM
-const formElement = document.querySelector('.popup__body');// Воспользуйтесь методом querySelector()
+const formChangeName = document.querySelector('.popup__body');// Воспользуйтесь методом querySelector()
 const nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
 const profileName = document.querySelector('.profile__name');
@@ -128,4 +113,4 @@ function formSubmitHandler (evt) {
     closePopup(popupChangeName);
 }
 
-formElement.addEventListener('submit', formSubmitHandler);
+formChangeName.addEventListener('submit', formSubmitHandler);
