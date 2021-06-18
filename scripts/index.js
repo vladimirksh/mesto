@@ -56,7 +56,7 @@ const formElementAddcard = document.querySelector('.popup__body_add-card');
 //Функция добавления карточки в начало потока карт
 function cardsFlow (container, newCard){
   container.prepend(newCard);
-}
+};
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -75,7 +75,6 @@ const openPopupButton = document.querySelector('.profile__editbutton'); //Выб
 const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
 const closePopupButton = document.querySelector('.popup__close-change'); //Выбираем крест для закрытия попапа
 const popupButtonSave = document.querySelector('.popup__save');//Выбираем кнопку Сохранить
-
 
 function infoName() {
   nameInput.value = profileName.textContent;
@@ -111,6 +110,6 @@ function formSubmitHandler (evt) {
     profileName.textContent = nameInput.value;
     profileAbout.textContent = jobInput.value;
     closePopup(popupChangeName);
-}
+};
 
 formChangeName.addEventListener('submit', formSubmitHandler);
