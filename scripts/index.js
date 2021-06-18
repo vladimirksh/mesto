@@ -58,8 +58,6 @@ function cardsFlow (container, newCard){
   container.prepend(newCard);
 }
 
-const placeInput = document.querySelector('.popup__input_type_place').value;
-const imageInput = document.querySelector('.popup__input_type_image').value;
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElementAddcard.addEventListener('submit', formSubmitNewCard);
