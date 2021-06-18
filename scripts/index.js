@@ -66,6 +66,8 @@ formElementAddcard.addEventListener('submit', formSubmitNewCard);
 
 function formSubmitNewCard (evt) {
   evt.preventDefault();
+  const placeInput = document.querySelector('.popup__input_type_place').value;
+  const imageInput = document.querySelector('.popup__input_type_image').value;
   cardsFlow(cardsContainer, createCard (placeInput, imageInput));
   formElementAddcard.reset();
   closePopup(popupAddCard);
