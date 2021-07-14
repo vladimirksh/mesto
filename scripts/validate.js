@@ -101,9 +101,7 @@ overlayList.forEach((formOverlay) => {
 formOverlay.addEventListener('click', formsClose);
 });
 
-
-
- document.addEventListener('keydown', function(evt) {
+document.addEventListener('keydown', function(evt) {
   const key = evt.key; // const {key} = event; in ES6+
   if (key === "Escape") {
       formsClose();
