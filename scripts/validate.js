@@ -68,10 +68,10 @@ const hasInvalidInput = (inputList) => {
 }; 
 
 
-const enableValidation = () => {
+const enableValidation = ({formSelector}) => {
   // Найдём все формы с указанным классом в DOM,
   // сделаем из них массив методом Array.from
-  const formList = Array.from(document.querySelectorAll('.popup__body'));
+  const formList = Array.from(document.querySelectorAll(formSelector));
 
   // Переберём полученную коллекцию
   formList.forEach((formElement) => {
@@ -87,7 +87,9 @@ const enableValidation = () => {
 };
 
 // Вызовем функцию
-enableValidation(); 
+enableValidation({
+  formSelector: '.popup__body'
+}); 
 
 const popupList = Array.from(document.querySelectorAll('.popup'));// получаю массив из форм, потом вызываю закрытие поапа функцией из предыдущего index.js
 const formsClose = () => {
@@ -102,7 +104,7 @@ formOverlay.addEventListener('click', formsClose);
 });
 
 document.addEventListener('keydown', function(evt) {
-  const key = evt.key; // const {key} = event; in ES6+
+  const key = evt.key; 
   if (key === "Escape") {
       formsClose();
   }
