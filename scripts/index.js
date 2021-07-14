@@ -4,6 +4,7 @@
   const popupImage = document.querySelector('.popup__image');
   const popupText = document.querySelector('.popup__text');
 
+
 //функция создания одной карочки с кнопкоми и попапом
   function createCard (name, link) {
     const element = template.querySelector('.element').cloneNode(true);

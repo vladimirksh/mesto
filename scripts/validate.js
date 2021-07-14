@@ -89,3 +89,23 @@ const enableValidation = () => {
 // Вызовем функцию
 enableValidation(); 
 
+const popupList = Array.from(document.querySelectorAll('.popup'));// получаю массив из форм, потом вызываю закрытие поапа функцией из предыдущего index.js
+const formsClose = () => {
+  popupList.forEach((popupForm) => {
+  closePopup(popupForm);
+});
+};
+
+const overlayList = Array.from(document.querySelectorAll('.popup__background'));//получаю массив оверлейв для каждого присваиваю слушателя который закрывает поап
+overlayList.forEach((formOverlay) => {
+formOverlay.addEventListener('click', formsClose);
+});
+
+
+
+ document.addEventListener('keydown', function(evt) {
+  const key = evt.key; // const {key} = event; in ES6+
+  if (key === "Escape") {
+      formsClose();
+  }
+});
