@@ -4,6 +4,22 @@
   const popupImage = document.querySelector('.popup__image');
   const popupText = document.querySelector('.popup__text');
 
+//Функция удаления карточки которая принимает карточку ищет в ней кнопку, а далее удаляет саму карточу
+const deletCard = (cardElement) => {
+const buttonDelete = cardElement.querySelector('.element__delete');
+buttonDelete.addEventListener('mousedown', function () {
+buttonDelete.parentElement.remove();
+});
+};
+//Функция увеличения картинки из карточки, работает по тому же приципу что и удаление картчки
+const ZoomPopupInImg = (cardElement) => {
+cardElement.querySelector('.element__image').addEventListener('click', () => {
+popupImage.setAttribute('src', cardElement.querySelector('.element__image').src);//ссылка для картинки
+popupImage.setAttribute('alt',cardElement.querySelector('.element__title').textContent);//alt для картинки
+popupText.textContent = cardElement.querySelector('.element__title').textContent;//подпись снизу для картинки
+openPopup(popupZoom);
+});
+};
 
 //функция создания одной карочки с кнопкоми и попапом
   function createCard (name, link) {
@@ -16,24 +32,15 @@
     element.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
     });
-    //удаление карточки будет работать по тому же принципу как и лайк, описываю функционал для одной но в методе будет работать и у др.
-    const deleteButton = element.querySelector('.element__delete');
-    deleteButton.addEventListener('click', function () {
-    deleteButton.parentElement.remove();
-    });
-    //попап для картинки в элементе
-    element.querySelector('.element__image').addEventListener('click', function (evt) {
-    popupImage.setAttribute('src', element.querySelector('.element__image').src);//ссылка для картинки
-    popupImage.setAttribute('alt',element.querySelector('.element__title').textContent);//alt для картинки
-    popupText.textContent = element.querySelector('.element__title').textContent;//подпись снизу для картинки
-    openPopup(popupZoom);
-    });
+    
+    deletCard(element);//Вызываем функцию удаления карточки
+    ZoomPopupInImg(element);//попап для картинки в элементе
 
     return element;
   }
 
 //добавляем карточки из массива (initialCards) с помощью метода forEach 
-initialCards.forEach (function(item){
+initialCards.forEach ((item) => {
   cardsFlow(cardsContainer, createCard(item.name,item.link));
 });
 
@@ -43,14 +50,14 @@ const popupCloseZoom = document.querySelector('.popup__close-zoom');
 popupCloseZoom.addEventListener('click', () => closePopup(popupZoom));
 
 // Popup для новых постов
-const openPopupAddButton = document.querySelector('.profile__addbutton'); //Выбираем кнопку вызывающую попап
+const popupAddButtonOpen = document.querySelector('.profile__addbutton'); //Выбираем кнопку вызывающую попап
 const popupAddCard = document.querySelector('.popup_add-card'); // Выбираем сам попап для использования этой константы в функции
-const closePopupAddButton = document.querySelector('.popup__close_add-card'); //Выбираем крест для закрытия попапа
-const savePopupAddButton = document.querySelector('.popup__save_add-card');//Выбираем кнопку Создать
+const popupAddButtonClose = document.querySelector('.popup__close_add-card'); //Выбираем крест для закрытия попапа
+
 
 // Открываем попап для добавления нового поста
-openPopupAddButton.addEventListener('click', () => openPopup(popupAddCard));
-closePopupAddButton.addEventListener('click', () => closePopup(popupAddCard));
+popupAddButtonOpen.addEventListener('click', () => openPopup(popupAddCard));
+popupAddButtonClose.addEventListener('click', () => closePopup(popupAddCard));
 // Находим форму в DOM для добавления нового поста
 const formElementAddcard = document.querySelector('.popup__body_add-card');
 
@@ -72,9 +79,9 @@ function formSubmitNewCard (evt) {
   closePopup(popupAddCard);
 };
 
-const openPopupButton = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
+const popupButtonOpen = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
 const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
-const closePopupButton = document.querySelector('.popup__close-change'); //Выбираем крест для закрытия попапа
+const popupButtonClose = document.querySelector('.popup__close-change'); //Выбираем крест для закрытия попапа
 const popupButtonSave = document.querySelector('.popup__save');//Выбираем кнопку Сохранить
 
 function infoName() {
@@ -84,10 +91,12 @@ function infoName() {
 // Функция которая добавляет и удалет класс
 function openPopup(popup) {
   popup.classList.add('popup_open');
+  document.addEventListener('keydown', checkedKey);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_open');
+  document.removeEventListener('keydown', checkedKey);
 };
 
 function openChangePopup () {
@@ -96,8 +105,8 @@ function openChangePopup () {
   };
 
 // Открываем попап
-openPopupButton.addEventListener('click', openChangePopup);
-closePopupButton.addEventListener('click', () => closePopup(popupChangeName));
+popupButtonOpen.addEventListener('click', openChangePopup);
+popupButtonClose.addEventListener('click', () => closePopup(popupChangeName));
 // Находим форму в DOM
 const formChangeName = document.querySelector('.popup__body');// Воспользуйтесь методом querySelector()
 const nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
@@ -114,3 +123,27 @@ function formSubmitHandler (evt) {
 };
 
 formChangeName.addEventListener('submit', formSubmitHandler);
+
+
+//Функция закрытия попапа для Esc
+const formsClose = () => {
+  popupList.forEach((popupForm) => {
+  closePopup(popupForm);
+});
+};
+//Функция проверки на нажатие Esc
+const checkedKey = (evt) => {
+  const key = evt.key; 
+  if (key === "Escape") {
+    formsClose();
+  };
+};
+
+const popupList = Array.from(document.querySelectorAll('.popup'));//Получаю все popup
+popupList.forEach((popupForm) => {
+  popupForm.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup__background') || evt.target.classList.contains('popup__close')) { 
+      closePopup(popupForm);
+    };
+  });
+});
