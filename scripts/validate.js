@@ -34,10 +34,10 @@ const toggleButtonState = (inputList, buttonElement, popupElements) => {
 const isValid = (form, inputForm, popupElements) => {
   if (!inputForm.validity.valid) {
     // Если поле не проходит валидацию, покажем ошибку
-    showInputError(form, inputForm, inputForm.validationMessage, popupElements.inputErrorClass, popupElements.errorClass);
+    showInputError(form, inputForm, inputForm.validationMessage, popupElements);
   } else {
     // Если проходит, скроем
-    hideInputError(form, inputForm, popupElements.inputErrorClass, popupElements.errorClass);
+    hideInputError(form, inputForm, popupElements);
   }
 };
 
