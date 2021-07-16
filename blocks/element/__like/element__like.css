@@ -4,6 +4,10 @@
   background-color: transparent;
   cursor: pointer;
   outline: none;
+  background: url('../../../images/like.svg') center no-repeat;
+  background-size: contain;
+  width: 10%;
+  max-height: 19px;
 }
 
 .element__like:hover {

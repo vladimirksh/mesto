@@ -74,8 +74,11 @@ function formSubmitNewCard (evt) {
   evt.preventDefault();
   const placeInput = document.querySelector('.popup__input_type_place').value;
   const imageInput = document.querySelector('.popup__input_type_image').value;
+  const buttonElement = document.querySelector('.popup__save_add-card');
   cardsFlow(cardsContainer, createCard (placeInput, imageInput));
   formElementAddcard.reset();
+  buttonElement.setAttribute('disabled', true);
+  buttonElement.classList.add('popup__save_inactive');
   closePopup(popupAddCard);
 };
 
