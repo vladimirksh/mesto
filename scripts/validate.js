@@ -1,4 +1,4 @@
-//функция добавления класса с ошибкой
+/*//функция добавления класса с ошибкой
 const showInputError = (form, inputForm, errorMessage, popupElements) => {
   const errorForm = form.querySelector(`.${inputForm.id}-error`);//ищим ошибку в форме
 
@@ -87,14 +87,6 @@ const enableValidation = (popupElements) => {
   });
 };
 
-const popupElements = {
-  formSelector: '.popup__body',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-};
 
-// Вызовем функцию
-enableValidation(popupElements);
+enableValidation(popupElements);*/
+
