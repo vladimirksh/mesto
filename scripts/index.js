@@ -1,6 +1,9 @@
-import {Card, openPopup, closePopup} from './Card.js';
+import {Card} from './Card.js';
 import {initialCards} from './cards.js';
-import {FormValidator, popupElements} from './FormValidator.js';
+import {FormValidator} from './FormValidator.js';
+import {validationConfig, popupCloseZoom} from './constants.js';
+import {openPopup, closePopup} from './functions.js';
+
 
 const cardsContainer = document.querySelector('.cards-container');//место куда копируем новые карточки
 
@@ -34,7 +37,7 @@ function formSubmitNewCard (evt) {
   const imageInput = document.querySelector('.popup__input_type_image').value;
   const buttonElement = document.querySelector('.popup__save_add-card');
 
-  const newCard = new Card(placeInput, imageInput);
+  const newCard = new Card(placeInput, imageInput, '#template');
   const newCardElement = newCard.generateCard();
   cardsFlow(cardsContainer, newCardElement);
 
@@ -76,10 +79,19 @@ function formSubmitHandler (evt) {
 formChangeName.addEventListener('submit', formSubmitHandler);
 
 initialCards.forEach ((item) => {
-  const card = new Card(item.name, item.link);
+  const card = new Card(item.name, item.link, '#template');
   const cardElement = card.generateCard();
   cardsFlow(cardsContainer, cardElement);
 });
 
-const cardValidation = new FormValidator(popupElements, popupElements.inputSelector);
-cardValidation.enableValidation();
+popupCloseZoom.addEventListener('click', () => closePopup(popupZoom));
+
+
+const cardForm = document.querySelector('.popup_add-card');
+const profileForm = document.querySelector('.popup-change');
+
+const cardValidator= new FormValidator(validationConfig, cardForm);
+cardValidator.enableValidation();
+
+const profileValidator = new FormValidator(validationConfig, profileForm);
+profileValidator.enableValidation(); 
