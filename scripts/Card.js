@@ -16,35 +16,32 @@ class Card {
   }
 
   _setEventListener(cardElement) {
-    this._likeActivation(cardElement); 
-    this._deleteCard(cardElement); 
-    this._zoomPopupImg(cardElement); 
+    this._buttonLike = cardElement.querySelector(".element__like");
+    this._buttonLike.addEventListener("click", () => this._likeActivation());
+
+    this._buttonDelete = cardElement.querySelector(".element__delete");
+    this._buttonDelete.addEventListener("click", () => this._deleteCard());
+
+    this._image = cardElement.querySelector(".element__image");
+    this._image.addEventListener("click", () => this._zoomPopupImg());
+
     return cardElement;
   }
 
-  _likeActivation(cardElement) { 
-    const buttonLike = cardElement.querySelector('.element__like'); 
-    buttonLike.addEventListener('click',function (evt) { 
-      evt.target.classList.toggle('element__like_active'); 
-      }); 
-  } 
- 
-  _deleteCard(cardElement) { 
-    const buttonDelete = cardElement.querySelector('.element__delete'); 
-    buttonDelete.addEventListener('mousedown', function () { 
-    buttonDelete.parentElement.remove();
-    //cardElement.remove(); 
-    }); 
-  } 
- 
-  _zoomPopupImg(cardElement) { 
-    cardElement.querySelector('.element__image').addEventListener('click', () => { 
-    popupImage.setAttribute('src', cardElement.querySelector('.element__image').src);//ссылка для картинки 
-    popupImage.setAttribute('alt',cardElement.querySelector('.element__title').textContent);//alt для картинки 
-    popupText.textContent = cardElement.querySelector('.element__title').textContent;//подпись снизу для картинки 
-    openPopup(popupZoom); 
-    }) 
-  } 
+  _likeActivation() {
+    this._buttonLike.classList.toggle("element__like_active");
+  }
+
+  _deleteCard() {
+    this._element.remove();
+  }
+
+  _zoomPopupImg() {
+    popupImage.setAttribute("src", this._link); //ссылка для картинки
+    popupImage.setAttribute("alt", this._name); //alt для картинки
+    popupText.textContent = this._name; //подпись снизу для картинки
+    openPopup(popupZoom);
+  }
 
   _getCard() {
     return this._setEventListener(this._cloneCard());
