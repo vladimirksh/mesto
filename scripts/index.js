@@ -37,8 +37,6 @@ function formSubmitNewCard (evt) {
     name: document.querySelector('.popup__input_type_place').value,
     link: document.querySelector('.popup__input_type_image').value,
   };
-  const buttonElement = document.querySelector('.popup__save_add-card');
-
   const newCard = new Card(valueNewCard, '#template');
   const newCardElement = newCard.generateCard();
   flowCards(cardsContainer, newCardElement);
