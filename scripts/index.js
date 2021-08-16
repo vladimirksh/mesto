@@ -24,7 +24,7 @@ popupAddButtonOpen.addEventListener('click', () => openPopup(popupAddCard));
 popupAddButtonClose.addEventListener('click', () => closePopup(popupAddCard));
 
 //Функция добавления карточки в начало потока карт
-function cardsFlow (container, newCard){
+function flowCards (container, newCard){
   container.prepend(newCard);
 };
 
@@ -33,16 +33,18 @@ formElementAddcard.addEventListener('submit', formSubmitNewCard);
 //Функция создания нового поста из поаппа
 function formSubmitNewCard (evt) {
   evt.preventDefault();
-  const placeInput = document.querySelector('.popup__input_type_place').value;
-  const imageInput = document.querySelector('.popup__input_type_image').value;
+  const valueNewCard = {
+    name: document.querySelector('.popup__input_type_place').value,
+    link: document.querySelector('.popup__input_type_image').value,
+  };
   const buttonElement = document.querySelector('.popup__save_add-card');
 
-  const newCard = new Card(placeInput, imageInput, '#template');
+  const newCard = new Card(valueNewCard, '#template');
   const newCardElement = newCard.generateCard();
-  cardsFlow(cardsContainer, newCardElement);
+  flowCards(cardsContainer, newCardElement);
 
   formElementAddcard.reset();
-  buttonElement.setAttribute('disabled', true);
+  cardValidator.toggleButtonState();
   buttonElement.classList.add('popup__save_inactive');
   closePopup(popupAddCard);
 };
@@ -79,9 +81,9 @@ function formSubmitHandler (evt) {
 formChangeName.addEventListener('submit', formSubmitHandler);
 
 initialCards.forEach ((item) => {
-  const card = new Card(item.name, item.link, '#template');
+  const card = new Card(item, '#template');
   const cardElement = card.generateCard();
-  cardsFlow(cardsContainer, cardElement);
+  flowCards(cardsContainer, cardElement);
 });
 
 popupCloseZoom.addEventListener('click', () => closePopup(popupZoom));

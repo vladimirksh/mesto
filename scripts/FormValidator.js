@@ -6,8 +6,6 @@ class FormValidator {
     this._popupBody = this._popupForm.querySelector(this._popupElements.formSelector);
     this._popupInputList = Array.from(this._popupBody.querySelectorAll(this._popupElements.inputSelector));
     this._popupButton = this._popupBody.querySelector(this._popupElements.submitButtonSelector);
-    this._popupInputSelector = this._popupBody.querySelector(this._popupElements.inputSelector);
-    this._popupError = this._popupBody.querySelector(`.${this._popupInputSelector.id}-error`);
     
   }
   enableValidation () {
@@ -18,11 +16,12 @@ class FormValidator {
     };
 
   _setEventListeners () {
-     this._toggleButtonState();
+     this.toggleButtonState();
      this._popupInputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._isValid(inputElement);
-        this._toggleButtonState();
+        const inputError = this._popupBody.querySelector(`.${inputElement.id}-error`);
+        this._isValid(inputElement, inputError);
+        this.toggleButtonState();
       });
     });
   }
@@ -33,15 +32,15 @@ class FormValidator {
     })
   }
   
-  _isValid (input) {
+  _isValid (input, inputError) {
     if (!input.validity.valid) {
-      this._showInputError(input);
+      this._showInputError(input, inputError);
     } else {
-      this._hideInputError(input);
+      this._hideInputError(input, inputError);
     }
   }
 
-  _toggleButtonState () {
+  toggleButtonState () {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
@@ -54,17 +53,16 @@ class FormValidator {
     }
   }
 
-  _hideInputError (input) {  
-   
+  _hideInputError (input, inputError) {  
     input.classList.remove(this._popupElements.inputErrorClass);// delete класс для инпута красное подчеркивание
-    this._popupError.textContent = '';// Заменим содержимое span с ошибкой 
-    this._popupError.classList.remove(this._popupElements.errorClass);
+    inputError.textContent = '';// Заменим содержимое span с ошибкой 
+    inputError.classList.remove(this._popupElements.errorClass);
   }
 
-  _showInputError (input) {
+  _showInputError (input, inputError) {
     input.classList.add(this._popupElements.inputErrorClass);//класс для инпута красное подчеркивание
-    this._popupError.textContent = input.validationMessage; // Заменим содержимое span с ошибкой на переданный параметр
-    this._popupError.classList.add(this._popupElements.errorClass);
+    inputError.textContent = input.validationMessage; // Заменим содержимое span с ошибкой на переданный параметр
+    inputError.classList.add(this._popupElements.errorClass);
   }
 }
 
