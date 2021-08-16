@@ -45,7 +45,6 @@ function formSubmitNewCard (evt) {
 
   formElementAddcard.reset();
   cardValidator.toggleButtonState();
-  buttonElement.classList.add('popup__save_inactive');
   closePopup(popupAddCard);
 };
 
