@@ -1,13 +1,15 @@
-import {popupImage, popupText, popupZoom} from './constants.js';
-import {openPopup} from './functions.js';
+/*import {popupImage, popupText, popupZoom} from '../utils/constants.js';
+import {openPopup} from '../utils/functions.js';
+import PopupWithImage from './PopupWithImage.js';*/
 
 
 class Card {
-  constructor(data, selector) {
+  constructor(data, selector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._selector = selector;
     this._template = document.querySelector(this._selector).content;
+    this._handleCardClick = handleCardClick;
   }
   
   _cloneCard() {
@@ -23,7 +25,7 @@ class Card {
     this._buttonDelete.addEventListener("click", () => this._deleteCard());
 
     this._image = cardElement.querySelector(".element__image");
-    this._image.addEventListener("click", () => this._zoomPopupImg());
+    this._image.addEventListener("click", () => this._handleCardClick());
 
     return cardElement;
   }
@@ -36,12 +38,7 @@ class Card {
     this._element.remove();
   }
 
-  _zoomPopupImg() {
-    popupImage.setAttribute("src", this._link); //ссылка для картинки
-    popupImage.setAttribute("alt", this._name); //alt для картинки
-    popupText.textContent = this._name; //подпись снизу для картинки
-    openPopup(popupZoom);
-  }
+
 
   _getCard() {
     return this._setEventListener(this._cloneCard());

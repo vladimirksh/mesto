@@ -22,6 +22,8 @@ const checkedKey = (evt) => {
   };
 };
 
+
+
 const popupList = Array.from(document.querySelectorAll('.popup'));//Получаю все popup
 popupList.forEach((popupForm) => {
   popupForm.addEventListener('mousedown', (evt) => {
