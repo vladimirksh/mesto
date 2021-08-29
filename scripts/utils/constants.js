@@ -7,7 +7,14 @@ export const validationConfig = {
   errorClass: 'popup__input-error_active'
 };
 
-export const popupImage = document.querySelector('.popup__image');
-export const popupText = document.querySelector('.popup__text');
 export const popupZoom = document.querySelector('.popup_zoom-image');
-export const popupCloseZoom = document.querySelector('.popup__close-zoom');
+export const popupAddButtonOpen = document.querySelector('.profile__addbutton');
+export const popupAddCard = document.querySelector('.popup_add-card'); 
+export const cardsContainer = document.querySelector('.cards-container');
+
+export const popupButtonOpen = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
+export const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
+export const nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
+export const jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
+export const profileName = document.querySelector('.profile__name');
+export const profileAbout = document.querySelector('.profile__about');

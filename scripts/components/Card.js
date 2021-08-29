@@ -1,8 +1,3 @@
-/*import {popupImage, popupText, popupZoom} from '../utils/constants.js';
-import {openPopup} from '../utils/functions.js';
-import PopupWithImage from './PopupWithImage.js';*/
-
-
 class Card {
   constructor(data, selector, handleCardClick) {
     this._name = data.name;
