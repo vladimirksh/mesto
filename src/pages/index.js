@@ -18,6 +18,38 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 
+// теперь картинки можно импортировать,
+// вебпак добавит в переменные правильные пути
+const addButtonBig = new URL('../images/AddButton-big.svg', import.meta.url);
+const addButton = new URL('../images/AddButton.svg', import.meta.url);
+const Delete = new URL('../images/delete.svg', import.meta.url);
+const EditButtonMin = new URL('../images/EditButton_min.svg', import.meta.url);
+const EditButton = new URL('../images/EditButton.svg', import.meta.url);
+const Jhak = new URL('../images/image.jpg', import.meta.url);
+const LikeActive = new URL('../images/like_active.svg', import.meta.url);
+const Like = new URL('../images/like.svg', import.meta.url);
+const Logo = new URL('../images/logo.svg', import.meta.url);
+const PopupCloseBig = new URL('../images/popupClose-big.svg', import.meta.url);
+const PopupCloseMin = new URL('../images/popupClose-min.svg', import.meta.url);
+
+const whoIsTheGoat = [
+  // меняем исходные пути на переменные
+  { name: 'ButtonBigAdd', image: addButtonBig },
+  { name: 'ButtonAdd', link: addButton },
+  { name: 'ButtonDelete', link: Delete },
+  { name: 'ButtonEditMin', image: EditButtonMin },
+  { name: 'ButtonEdit', link: EditButton },
+  { name: 'FotoJhak', link: Jhak },
+  { name: 'ButtonLikeActive', image: LikeActive },
+  { name: 'ButtonLike', link: Like },
+  { name: 'ImageLogo', link: Logo },
+  { name: 'ButtonPopupCloseBig', image: PopupCloseBig },
+  { name: 'ButtonPopupCloseMin', link: PopupCloseMin },
+]; 
+
+import './index.css'; // добавьте импорт главного файла стилей 
+
+
 /* Popup для новых постов*/
 /*Создание новой карточки */
 const form = new PopupWithForm({
@@ -71,6 +103,7 @@ renderer: (itemCard) => {
 }
 }, cardsContainer);
 cardList.renderItems();
+popupPreview.setEventListeners();
 /*Отрисовываем 6 карточек  из массива при помощи слабого связывание между классами */
 
 /*Для каждой формы устанавливаем свою валидацию*/
