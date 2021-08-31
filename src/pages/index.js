@@ -6,91 +6,70 @@ import {validationConfig,
         popupAddButtonOpen, 
         popupAddCard,
         cardsContainer,
-        popupButtonOpen,
+        buttonOpenChangeName,
         popupChangeName,
         nameInput,
         jobInput,
         profileName,
-        profileAbout
+        profileAbout,
+        cardForm,
+        profileForm
       } from '../scripts/utils/constants.js';
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 
-// теперь картинки можно импортировать,
-// вебпак добавит в переменные правильные пути
-const addButtonBig = new URL('../images/AddButton-big.svg', import.meta.url);
-const addButton = new URL('../images/AddButton.svg', import.meta.url);
-const Delete = new URL('../images/delete.svg', import.meta.url);
-const EditButtonMin = new URL('../images/EditButton_min.svg', import.meta.url);
-const EditButton = new URL('../images/EditButton.svg', import.meta.url);
-const Jhak = new URL('../images/image.jpg', import.meta.url);
-const LikeActive = new URL('../images/like_active.svg', import.meta.url);
-const Like = new URL('../images/like.svg', import.meta.url);
-const Logo = new URL('../images/logo.svg', import.meta.url);
-const PopupCloseBig = new URL('../images/popupClose-big.svg', import.meta.url);
-const PopupCloseMin = new URL('../images/popupClose-min.svg', import.meta.url);
-
-const whoIsTheGoat = [
-  // меняем исходные пути на переменные
-  { name: 'ButtonBigAdd', image: addButtonBig },
-  { name: 'ButtonAdd', link: addButton },
-  { name: 'ButtonDelete', link: Delete },
-  { name: 'ButtonEditMin', image: EditButtonMin },
-  { name: 'ButtonEdit', link: EditButton },
-  { name: 'FotoJhak', link: Jhak },
-  { name: 'ButtonLikeActive', image: LikeActive },
-  { name: 'ButtonLike', link: Like },
-  { name: 'ImageLogo', link: Logo },
-  { name: 'ButtonPopupCloseBig', image: PopupCloseBig },
-  { name: 'ButtonPopupCloseMin', link: PopupCloseMin },
-]; 
-
 import './index.css'; // добавьте импорт главного файла стилей 
 
 
 /* Popup для новых постов*/
 /*Создание новой карточки */
-const form = new PopupWithForm({
+const createNewCard = new PopupWithForm({
   selectorPopup: popupAddCard,
-  handleFormSubmit: (formData) => {
-       form.close();
+  handleFormSubmit: () => {
+    const valuesInput = {
+      link:document.querySelector('.popup__input_type_image').value,
+      name: document.querySelector('.popup__input_type_place').value
+    };
     // при создании экземпляра  передаём ему объект с данными формы
-        const card = new Card(formData, '#template', () => {popupPreview.open(formData)});
+        const card = new Card(valuesInput, '#template', () => {popupPreview.open(valuesInput)});
         const cardElement = card.generateCard();//возвращает готовую карточку
         cardList.addItem(cardElement);//вставляем готовую карточку в DOM
-        cardValidator.toggleButtonState();
-        form.close();
+        createNewCard.close();
       }
       });
 // Открываем попап для добавления нового поста
-popupAddButtonOpen.addEventListener('click', () => form.open());
-form.setEventListeners();
+popupAddButtonOpen.addEventListener('click', () => {
+  createNewCard.open();
+  cardValidator.cleanInputError();
+});
+createNewCard.setEventListeners();
+
 /* Popup для новых постов*/
 
 /*Popup для редактирования имени и о себе*/
-const popupFormProfile = new PopupWithForm({
-  selectorPopup: popupChangeName,
-  handleFormSubmit: (data) => {
-    console.log(userInfo.setUserInfo(data));
-    profileValidator.toggleButtonState();
+const popupFormProfile = new PopupWithForm({ 
+  selectorPopup: popupChangeName, 
+  handleFormSubmit: (data) => { 
+    userInfo.setUserInfo(data);
     popupFormProfile.close();
-  }
-})
-
-popupFormProfile.setEventListeners();
-
-const userInfo = new UserInfo({
-  userName: profileName,
-  userJob: profileAbout
-});
-//открываем попап
-popupButtonOpen.addEventListener('click', () => {
-  nameInput.value = userInfo.getUserInfo().userName;
-  jobInput.value = userInfo.getUserInfo().userJob;
+  } 
+}) 
+popupFormProfile.setEventListeners(); 
+ 
+const userInfo = new UserInfo({ 
+  userName: profileName, 
+  userJob: profileAbout 
+}); 
+//открываем попап 
+buttonOpenChangeName.addEventListener('click', () => { 
+  nameInput.value = userInfo.getUserInfo().userName; 
+  jobInput.value = userInfo.getUserInfo().userJob; 
   popupFormProfile.open();
-});
+  profileValidator.cleanInputError();
+
+}); 
 /*Popup для редактирования имени и о себе*/
 
 /*Отрисовываем 6 карточек  из массива при помощи слабого связывание между классами */
@@ -107,9 +86,6 @@ popupPreview.setEventListeners();
 /*Отрисовываем 6 карточек  из массива при помощи слабого связывание между классами */
 
 /*Для каждой формы устанавливаем свою валидацию*/
-const cardForm = document.querySelector('.popup_add-card');
-const profileForm = document.querySelector('.popup-change');
-
 const cardValidator= new FormValidator(validationConfig, cardForm);
 cardValidator.enableValidation();
 

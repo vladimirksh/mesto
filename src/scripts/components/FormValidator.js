@@ -11,8 +11,18 @@ class FormValidator {
   enableValidation () {
     this._popupBody.addEventListener('submit', (evt) => {
       evt.preventDefault();
+      this.toggleButtonState();
+      
     });
     this._setEventListeners();
+    };
+
+    cleanInputError () {
+      this._popupInputList.forEach((inputElement) => {
+        const inputError = this._popupBody.querySelector(`.${inputElement.id}-error`);
+        this._hideInputError(inputElement, inputError);
+        this.toggleButtonState();
+      })
     };
 
   _setEventListeners () {
