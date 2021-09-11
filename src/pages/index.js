@@ -22,7 +22,6 @@ import UserInfo from '../scripts/components/UserInfo.js';
 
 import './index.css'; // добавьте импорт главного файла стилей 
 
-
 /* Popup для новых постов*/
 /*Создание новой карточки */
 const createNewCard = new PopupWithForm({
@@ -45,8 +44,8 @@ popupAddButtonOpen.addEventListener('click', () => {
   cardValidator.cleanInputError();
 });
 createNewCard.setEventListeners();
-
 /* Popup для новых постов*/
+
 
 /*Popup для редактирования имени и о себе*/
 const popupFormProfile = new PopupWithForm({ 
