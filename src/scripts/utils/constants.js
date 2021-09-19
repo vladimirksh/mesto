@@ -18,6 +18,11 @@ export const nameInput = document.querySelector('.popup__input_type_name');// В
 export const jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
 export const profileName = document.querySelector('.profile__name');
 export const profileAbout = document.querySelector('.profile__about');
+export const popupChengeButtonAvatar = document.querySelector('.profile__editavatar');
 
 export const cardForm = document.querySelector('.popup_add-card');
 export const profileForm = document.querySelector('.popup-change');
+export const avatarForm = document.querySelector('.popup-change-avatar');
+export const popuoDeleteCard = document.querySelector('.popup-delete');
+
+export const avatarImage = document.querySelector('.profile__avatar');

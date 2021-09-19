@@ -18,13 +18,15 @@
 
       <section class="profile">
         <div class="profile__main-info">
-          <div class="profile__avatar"></div>
+          <div class="profile__avatar">
+            <button class="profile__editavatar"></button>
+          </div>
           <div class="profile__info">
             <div class="profile__text">
-              <h1 class="profile__name">Жак-Ив Кусто ПРОВЕРКА РАБОТЫ</h1>
+              <h1 class="profile__name"></h1>
               <button class="profile__editbutton" type="button"></button>
             </div>
-            <p class="profile__about">Исследователь океана</p>
+            <p class="profile__about"></p>
           </div>
         </div>
         <button class="profile__addbutton" type="button"></button>
@@ -42,6 +44,38 @@
     </footer>
 
   </div>
+  <div class="popup popup-change-avatar">
+    <div class="popup__background"></div>
+    <div class="popup__content">
+      <button class="popup__close popup__close-avatar" type="button"></button>
+      <form class="popup__body" name="changeavatar" novalidate>
+        <fieldset class="popup__set">
+          <h4 class="popup__title">Обновить аватар</h4>
+          
+          <label class="popup__field">
+            <input id="image-input" class="popup__input popup__input_type_avatar" value="" placeholder="Ссылка на картинку" name="avatar" type="url" required>
+            <span class="image-input-error popup__input-error"></span>
+          </label>
+
+          <button class="popup__save popup__save-change" type="submit">Сохранить</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup-delete">
+    <div class="popup__background"></div>
+    <div class="popup__content">
+      <button class="popup__close popup__close-delete" type="button"></button>
+      <form class="popup__body" name="deletecard" novalidate>
+        <fieldset class="popup__set">
+          <h4 class="popup__title">Вы уверены?</h4>
+          <button class="popup__save popup__delete-card" type="submit">Да</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
   <div class="popup popup-change">
     <div class="popup__background"></div>
     <div class="popup__content">
@@ -107,7 +141,10 @@
       <img class="element__image" src="#" alt="#">
       <div class="element__signature">
         <p class="element__title"></p>
-        <button class="element__like" type="button"></button>
+        <div class="element__container">
+          <button class="element__like" type="button"></button>
+          <p class="element__likes-count">0</p>
+        </div>
       </div>
   </li>
   </template>
