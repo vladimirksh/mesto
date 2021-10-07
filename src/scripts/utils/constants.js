@@ -16,13 +16,17 @@ export const buttonOpenChangeName = document.querySelector('.profile__editbutton
 export const popupChangeName = document.querySelector('.popup-change'); // Выбираем сам попап для использования этой константы в функции
 export const nameInput = document.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 export const jobInput = document.querySelector('.popup__input_type_about');// Воспользуйтесь инструментом .querySelector()
+
 export const profileName = document.querySelector('.profile__name');
 export const profileAbout = document.querySelector('.profile__about');
-export const popupChengeButtonAvatar = document.querySelector('.profile__editavatar');
+export const profileAvatar = document.querySelector('.profile__avatar');
 
 export const cardForm = document.querySelector('.popup_add-card');
 export const profileForm = document.querySelector('.popup-change');
-export const avatarForm = document.querySelector('.popup-change-avatar');
-export const popuoDeleteCard = document.querySelector('.popup-delete');
+export const avatarForm = document.querySelector('.popup_change-avatar');
 
-export const avatarImage = document.querySelector('.profile__avatar');
+export const popupDeleteCard = document.querySelector('.popup_delete-card');
+
+export const buttonOpenChangeAvatar = document.querySelector('.profile__editavatar');
+export const popupChangeAvatar = document.querySelector('.popup_change-avatar');
+export const avatarInput = document.querySelector('.popup__input_type_avatar');

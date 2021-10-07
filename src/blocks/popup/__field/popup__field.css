@@ -3,3 +3,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.popup__set .popup__field:first-of-type {
+  margin-top: 54px;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__set .popup__field:first-of-type {
+    margin-top: 75px;
+  }
+}
