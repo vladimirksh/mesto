@@ -79,7 +79,9 @@ const createNewCard = new PopupWithForm({
     createNewCard.renderLoading(false);
     const valuesInput = [{
       link:document.querySelector('.popup__input_type_image').value,
-      name: document.querySelector('.popup__input_type_place').value
+      name: document.querySelector('.popup__input_type_place').value,
+      likes: 0,
+      owner: "d2d69bded002411fb31b68fe"
     }];
     api.postCard(valuesInput)
     .finally(() => {
