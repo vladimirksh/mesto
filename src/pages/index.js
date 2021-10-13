@@ -3,7 +3,7 @@ import {FormValidator} from '../scripts/components/FormValidator.js';
 import {validationConfig, 
         popupZoom, 
         popupAddButtonOpen, 
-        popupAddCard,
+        popupAddNewCard,
         cardsContainer,
         buttonOpenChangeName,
         popupChangeName,
@@ -33,50 +33,83 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
+const popupPreview = new PopupWithImage(popupZoom);
+popupPreview.setEventListeners();
 
-//функция создания карточк использую ниже
-function createCard (data) {
+//создание карточки
+function createCard (itemCard) {
+  const card = new Card(itemCard,'#template', () => {popupPreview.open(itemCard)},
+  (cardId) => {
+  const popupDelete = new PopupWithForm({
+    popupElement: popupDeleteCard,
+  handleFormSubmit: () => {
+    api.deleteCard(cardId)
+      .then(() => {
+          card.deleteCard();
+        popupDelete.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+});
+
+popupDelete.open();
+popupDelete.setEventListeners();
+},
+
+(cardId, element) => {
+  api.putLike(cardId)
+  .then((res) => {
+    element.querySelector('.element__likes-count').textContent = res.likes.length;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+},
+
+(cardId, element) => {
+  api.deleteLike(cardId)
+  .then((res) => {
+    element.querySelector('.element__likes-count').textContent = res.likes.length;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
+);
+  return card;
+}
+//создание карточки
+
+//функция размещения карточки использую ниже
+function sectionCard (data) {
   const cardList = new Section({items: data, 
     renderer: (itemCard) => {
-      const card = new Card(itemCard,'#template', () => {popupPreview.open(itemCard)},
-
-        (cardId) => {const popupDelete = new PopupWithForm({
-        selectorPopup: popupDeleteCard,
-        handleFormSubmit: () => {
-          api.deleteCard(cardId)
-            .then(() => {
-              card.deleteCard();
-            })
-        }
-      });
-      
-      popupDelete.open()
-      popupDelete.setEventListeners()
-      },
-      api);
-      const cardElement = card.generateCard();//возвращает готовую карточку
+      const cardElement = createCard(itemCard).generateCard();//возвращает готовую карточку
       cardList.addItem(cardElement);//вставляем готовую карточку в DOM
     }
     }, cardsContainer);
     cardList.renderItems();
-    popupPreview.setEventListeners();
 }
-//функция создания карточк использую ниже
+//функция размещения карточки использую ниже
 
 /*Отрисовываем карточки*/
-const popupPreview = new PopupWithImage(popupZoom);
 api.getCards()
   .then(result => {
-    createCard(result);
+    sectionCard(result);
   })
+  .catch((err) => {
+    console.error(err);
+  });
 /*Отрисовываем карточки*/
 
 /* Popup для новых постов*/
 /*Создание новой карточки */
-const createNewCard = new PopupWithForm({
-  selectorPopup: popupAddCard,
+const popupAddCard = new PopupWithForm({
+  popupElement: popupAddNewCard,
   handleFormSubmit: () => {
-    createNewCard.renderLoading(false);
+    popupAddCard.renderLoading(false);
     const valuesInput = [{
       link:document.querySelector('.popup__input_type_image').value,
       name: document.querySelector('.popup__input_type_place').value,
@@ -84,19 +117,26 @@ const createNewCard = new PopupWithForm({
       owner: "d2d69bded002411fb31b68fe"
     }];
     api.postCard(valuesInput)
-    .finally(() => {
-      createNewCard.renderLoading(true);
+    .then(() => {
+        popupAddCard.close();
+      }
+    )
+    .catch((err) => {
+      console.error(err);
     })
-    createCard(valuesInput);
-    createNewCard.close();
+    .finally(() => {
+      popupAddCard.renderLoading(true);
+    })
+    sectionCard(valuesInput);
+    
       }
       });
 // Открываем попап для добавления нового поста
 popupAddButtonOpen.addEventListener('click', () => {
-  createNewCard.open();
+  popupAddCard.open();
   cardValidator.cleanInputError();
 });
-createNewCard.setEventListeners();
+popupAddCard.setEventListeners();
 /* Popup для новых постов*/
 
 /*Popup для редактирования имени и о себе*/
@@ -114,13 +154,16 @@ const userInfo = new UserInfo({
 }); 
 
 const popupFormProfile = new PopupWithForm({ 
-  selectorPopup: popupChangeName, 
+  popupElement: popupChangeName, 
   handleFormSubmit: (data) => { 
     popupFormProfile.renderLoading(false);
     //при сабмите отправляем пост
     api.patchUserData(data)
     .then(res => {
       userInfo.setUserInfo(res);
+    })
+    .catch((err) => {
+      console.error(err);
     })
     .finally(() => {
       popupFormProfile.renderLoading(true);
@@ -141,18 +184,21 @@ buttonOpenChangeName.addEventListener('click', () => {
 
 /*Popup для редактирования аватара*/
 const changeAvatar = new PopupWithForm({
-  selectorPopup: popupChangeAvatar,
+  popupElement: popupChangeAvatar,
   handleFormSubmit: (data) => {
     changeAvatar.renderLoading(false);
     //при сабмите отправляем картинку
     api.patchUserAvatar(data)
     .then(res => {
       userInfo.setUserAvatar(res);
+      changeAvatar.close();
+    })
+    .catch((err) => {
+      console.error(err);
     })
     .finally(() => {
       changeAvatar.renderLoading(true);
     })
-    changeAvatar.close();
   }
 });
 changeAvatar.setEventListeners();

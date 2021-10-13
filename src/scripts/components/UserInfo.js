@@ -12,11 +12,14 @@ getUserInfo() {
   
 }
 setUserInfo(data) {
+  if (data.name && data.about) {
   this._nameElement.textContent = data.name;
   this._jobElement.textContent = data.about;
+  }
 }
-
 setUserAvatar(data) {
+  if(data.avatar){
   this._avatarElement.style.backgroundImage = `url('${data.avatar}')`;
+  }
 }
 }

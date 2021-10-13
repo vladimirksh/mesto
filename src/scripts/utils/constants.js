@@ -9,7 +9,7 @@ export const validationConfig = {
 
 export const popupZoom = document.querySelector('.popup_zoom-image');
 export const popupAddButtonOpen = document.querySelector('.profile__addbutton');
-export const popupAddCard = document.querySelector('.popup_add-card'); 
+export const popupAddNewCard = document.querySelector('.popup_add-card'); 
 export const cardsContainer = document.querySelector('.cards-container');
 
 export const buttonOpenChangeName = document.querySelector('.profile__editbutton'); //Выбираем кнопку редактирования профиля
