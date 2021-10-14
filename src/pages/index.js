@@ -26,6 +26,7 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 import './index.css'; // добавил импорт главного файла стилей 
 
+
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-27',
   headers: {
@@ -78,26 +79,23 @@ popupDelete.setEventListeners();
   });
 }
 );
-  return card;
+  return card.generateCard();
 }
 //создание карточки
 
-//функция размещения карточки использую ниже
-function sectionCard (data) {
-  const cardList = new Section({items: data, 
+//Класс размещения карточки использую ниже
+  const cardList = new Section({ 
     renderer: (itemCard) => {
-      const cardElement = createCard(itemCard).generateCard();//возвращает готовую карточку
-      cardList.addItem(cardElement);//вставляем готовую карточку в DOM
+      cardList.addItem(createCard(itemCard));//вставляем готовую карточку в DOM
     }
     }, cardsContainer);
-    cardList.renderItems();
-}
-//функция размещения карточки использую ниже
+    
+//Класс размещения карточки использую ниже
 
 /*Отрисовываем карточки*/
 api.getCards()
   .then(result => {
-    sectionCard(result);
+    cardList.renderItems(result);
   })
   .catch((err) => {
     console.error(err);
@@ -108,17 +106,14 @@ api.getCards()
 /*Создание новой карточки */
 const popupAddCard = new PopupWithForm({
   popupElement: popupAddNewCard,
-  handleFormSubmit: () => {
+  handleFormSubmit: (data) => {
     popupAddCard.renderLoading(false);
-    const valuesInput = [{
-      link:document.querySelector('.popup__input_type_image').value,
-      name: document.querySelector('.popup__input_type_place').value,
-      likes: 0,
-      owner: "d2d69bded002411fb31b68fe"
-    }];
-    api.postCard(valuesInput)
-    .then(() => {
+    console.log(data)
+    api.postCard(data)
+    .then((res) => {
+        console.log(res)
         popupAddCard.close();
+        cardList.addItem(createCard(res), true);
       }
     )
     .catch((err) => {
@@ -127,8 +122,6 @@ const popupAddCard = new PopupWithForm({
     .finally(() => {
       popupAddCard.renderLoading(true);
     })
-    sectionCard(valuesInput);
-    
       }
       });
 // Открываем попап для добавления нового поста
