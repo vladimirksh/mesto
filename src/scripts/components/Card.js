@@ -1,10 +1,11 @@
 class Card {
-  constructor(data, selector, handleCardClick, handleDeleteClick, handelPutLike, handleDeleteLike) {
+  constructor(data, selector, handleCardClick, handleDeleteClick, handelPutLike, handleDeleteLike, userId) {
     this._name = data.name;
     this._link = data.link;
+    this._likeId = data.likes;
     this._likesCount = data.likes.length;
     this._ownerId = data.owner._id;//создатель карточки
-    this._userId = "d2d69bded002411fb31b68fe"//мой id
+    this._userId = userId//мой id
     this._cardId = data._id;
     this._selector = selector;
     this._template = document.querySelector(this._selector).content;
@@ -62,13 +63,27 @@ class Card {
       buttonDelete.remove();
     }
   }
+
+  _checkMyLike(like) {
+    if (like) {
+      this._likeActivation();
+    }
+  }
+
+  _checkLikeOwner() {
+    return Boolean(this._likeId.find((obj => obj._id == this._userId)));
+  }
   
+  _findImage(element) {
+    return element.querySelector('.element__image')
+  }
+
   generateCard() {
     this._element = this._getCard();
-
-    this._element .querySelector('.element__title').textContent = this._name;
-    this._element .querySelector('.element__image').src = this._link;
-    this._element .querySelector('.element__image').alt = this._name;
+    this._checkMyLike(this._checkLikeOwner());
+    this._element.querySelector('.element__title').textContent = this._name;
+    this._findImage(this._element).src = this._link;
+    this._findImage(this._element).alt = this._name;
     this._element.querySelector('.element__likes-count').textContent = this._likesCount;
     return this._element; 
   }

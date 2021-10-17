@@ -26,6 +26,35 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 import './index.css'; // добавил импорт главного файла стилей 
 
+fetch('https://mesto.nomoreparties.co/v1/cohort-27/cards', 
+{headers: {
+  authorization: 'ca88055d-8e98-4fcc-94cf-8a7d7aaca5a8',
+  'Content-Type': 'application/json'
+}})
+.then(res => {
+  return res.json()
+})
+.then(res => {
+  console.log(res)
+})
+
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', 
+{headers: {
+  authorization: 'ca88055d-8e98-4fcc-94cf-8a7d7aaca5a8',
+  'Content-Type': 'application/json'
+}})
+.then(res => {
+  return res.json()
+})
+.then(res => {
+  console.log(res)
+})
+
+
+
+
+
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-27',
@@ -77,16 +106,24 @@ popupDelete.setEventListeners();
   .catch((err) => {
     console.error(err);
   });
-}
-);
+},
+"d2d69bded002411fb31b68fe"
+  )
+
   return card.generateCard();
 }
 //создание карточки
-
+api.getUserData()
+  .then(res => {
+    res._id
+  })
+  .catch((err) => {
+    console.error(err);
+  })
 //Класс размещения карточки использую ниже
   const cardList = new Section({ 
     renderer: (itemCard) => {
-      cardList.addItem(createCard(itemCard));//вставляем готовую карточку в DOM
+      cardList.addItem(createCard(itemCard));
     }
     }, cardsContainer);
     
@@ -108,7 +145,6 @@ const popupAddCard = new PopupWithForm({
   popupElement: popupAddNewCard,
   handleFormSubmit: (data) => {
     popupAddCard.renderLoading(false);
-    console.log(data)
     api.postCard(data)
     .then((res) => {
         console.log(res)
@@ -154,6 +190,7 @@ const popupFormProfile = new PopupWithForm({
     api.patchUserData(data)
     .then(res => {
       userInfo.setUserInfo(res);
+      popupFormProfile.close();
     })
     .catch((err) => {
       console.error(err);
@@ -161,7 +198,6 @@ const popupFormProfile = new PopupWithForm({
     .finally(() => {
       popupFormProfile.renderLoading(true);
     })
-    popupFormProfile.close();
   } 
 }) 
 popupFormProfile.setEventListeners(); 
