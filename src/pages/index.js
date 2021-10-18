@@ -24,37 +24,8 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation.js';
 import './index.css'; // добавил импорт главного файла стилей 
-
-fetch('https://mesto.nomoreparties.co/v1/cohort-27/cards', 
-{headers: {
-  authorization: 'ca88055d-8e98-4fcc-94cf-8a7d7aaca5a8',
-  'Content-Type': 'application/json'
-}})
-.then(res => {
-  return res.json()
-})
-.then(res => {
-  console.log(res)
-})
-
-
-fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', 
-{headers: {
-  authorization: 'ca88055d-8e98-4fcc-94cf-8a7d7aaca5a8',
-  'Content-Type': 'application/json'
-}})
-.then(res => {
-  return res.json()
-})
-.then(res => {
-  console.log(res)
-})
-
-
-
-
-
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-27',
@@ -63,30 +34,32 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
+
+//попап увеличения картнки карточки
 const popupPreview = new PopupWithImage(popupZoom);
 popupPreview.setEventListeners();
+//попап увеличения картнки карточки
+
+//попап удаления моей карточки (отдельный класс)
+const popupDeleteMyCard = new PopupWithConfirmation(popupDeleteCard);
+popupDeleteMyCard.setEventListeners();
+//попап удаления моей карточки (отдельный класс)
 
 //создание карточки
 function createCard (itemCard) {
   const card = new Card(itemCard,'#template', () => {popupPreview.open(itemCard)},
   (cardId) => {
-  const popupDelete = new PopupWithForm({
-    popupElement: popupDeleteCard,
-  handleFormSubmit: () => {
-    api.deleteCard(cardId)
-      .then(() => {
-          card.deleteCard();
-        popupDelete.close();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  popupDeleteMyCard.open();
+  popupDeleteMyCard.setSubmitAction(() => {
+  api.deleteCard(cardId)
+    .then(() => {
+      card.deleteCard();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
   }
-});
-
-popupDelete.open();
-popupDelete.setEventListeners();
-},
+)},
 
 (cardId, element) => {
   api.putLike(cardId)
@@ -107,19 +80,12 @@ popupDelete.setEventListeners();
     console.error(err);
   });
 },
-"d2d69bded002411fb31b68fe"
+userId
   )
-
   return card.generateCard();
 }
+
 //создание карточки
-api.getUserData()
-  .then(res => {
-    res._id
-  })
-  .catch((err) => {
-    console.error(err);
-  })
 //Класс размещения карточки использую ниже
   const cardList = new Section({ 
     renderer: (itemCard) => {
@@ -129,15 +95,35 @@ api.getUserData()
     
 //Класс размещения карточки использую ниже
 
-/*Отрисовываем карточки*/
-api.getCards()
+//получаю данные с сервера и присваиваю их при первоначальной загрузки сайта
+let userId = null;
+api.getUserData()
+.then(res => {
+  userId = res._id;
+  userInfo.setUserInfo(res)
+  userInfo.setUserAvatar(res)
+  /*Отрисовываем карточки при помощи вложенного запроса*/
+  if(userId){
+    api.getCards()
   .then(result => {
     cardList.renderItems(result);
   })
   .catch((err) => {
     console.error(err);
   });
-/*Отрисовываем карточки*/
+  }
+  /*Отрисовываем карточки при помощи вложенного запроса*/
+})
+.catch((err) => {
+  console.error(err);
+})
+
+const userInfo = new UserInfo({ 
+  userName: profileName, 
+  userJob: profileAbout,
+  userAvatar: profileAvatar
+}); 
+//получаю данные с сервера и присваиваю их при первоначальной загрузки сайта
 
 /* Popup для новых постов*/
 /*Создание новой карточки */
@@ -147,7 +133,6 @@ const popupAddCard = new PopupWithForm({
     popupAddCard.renderLoading(false);
     api.postCard(data)
     .then((res) => {
-        console.log(res)
         popupAddCard.close();
         cardList.addItem(createCard(res), true);
       }
@@ -169,19 +154,6 @@ popupAddCard.setEventListeners();
 /* Popup для новых постов*/
 
 /*Popup для редактирования имени и о себе*/
-//получаю данные с сервера и присваиваю их при первоначальной загрузки сайта
-api.getUserData()
-.then(res => {
-  userInfo.setUserInfo(res)
-  userInfo.setUserAvatar(res)
-})
-
-const userInfo = new UserInfo({ 
-  userName: profileName, 
-  userJob: profileAbout,
-  userAvatar: profileAvatar
-}); 
-
 const popupFormProfile = new PopupWithForm({ 
   popupElement: popupChangeName, 
   handleFormSubmit: (data) => { 
@@ -201,7 +173,7 @@ const popupFormProfile = new PopupWithForm({
   } 
 }) 
 popupFormProfile.setEventListeners(); 
- 
+
 //открываем попап 
 buttonOpenChangeName.addEventListener('click', () => { 
   nameInput.value = userInfo.getUserInfo().userName; 
